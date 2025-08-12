@@ -30,7 +30,25 @@ init_datetime(app)  # Handle UTC dates in timestamps
 #-----------------------------------------------------------
 @app.get("/")
 def index():
-    return render_template("pages/home.jinja")
+    with connect_db() as client:
+        # Get all todo things from SQ
+        sql = "SELECT group, name from todo ORDER BY name ASC"
+        params = []
+        result = client.execute(sql, params)
+        todo = result.rows
+
+        # Show them on the page
+        return render_template("pages/home.jinja")
+    
+
+#-----------------------------------------------------------
+# Todo page route
+#-----------------------------------------------------------
+@app.get("/todo/<group>")
+def show_todo_details(group):
+    with connect_db() as client:
+        # Get the details from the DB
+        sql = "SELECT group, name, priority FROM todo WHERE group "
 
 
 #-----------------------------------------------------------
@@ -44,7 +62,7 @@ def about():
 #-----------------------------------------------------------
 # Things page route - Show all the things, and new thing form
 #-----------------------------------------------------------
-@app.get("/things/")
+@app.get("//")
 def show_all_things():
     with connect_db() as client:
         # Get all the things from the DB
@@ -80,26 +98,59 @@ def show_one_thing(id):
 
 
 #-----------------------------------------------------------
-# Route for adding a thing, using data posted from a form
+# Route for adding a todo, using data posted from a form
 #-----------------------------------------------------------
 @app.post("/add")
-def add_a_thing():
+def add_a_todo():
     # Get the data from the form
-    name  = request.form.get("name")
-    price = request.form.get("price")
+    group = request.form.get("group")
+     
+    print(group)
 
     # Sanitise the text inputs
-    name = html.escape(name)
+    group = html.escape(group)
 
     with connect_db() as client:
-        # Add the thing to the DB
-        sql = "INSERT INTO things (name, price) VALUES (?, ?)"
-        params = [name, price]
+        # Add the todo to the DB
+        sql = """
+            INSERT INTO todo (group) 
+            VALUES (?)
+        """
+        params = [group]
         client.execute(sql, params)
 
         # Go back to the home page
-        flash(f"Thing '{name}' added", "success")
-        return redirect("/things")
+        flash(f"Todo '{group}' added", "success")
+        return redirect("/")
+    
+
+#-----------------------------------------------------------
+# Route for adding a team, using data posted from a form
+#-----------------------------------------------------------
+
+@app.post("/add-todo")
+def add_a_todo():
+    # Get the data from the form
+    type = request.form.get("type")
+    name  = request.form.get("name")
+    priority = request.form.get("priority")
+
+    # Sanitise the text inputs
+    name = html.escape(name)
+    priority = html.escape(priority)
+
+    with connect_db() as client:
+        # Add the todo thing to the DB
+        sql = """
+            INSERT INTO things (type, name, priority)
+            VALUES (?, ?, ?)
+        """
+        params = [type, name, priority]
+        client.execute(sql,params)
+
+        # Go back to the home page
+        flash(f"Todo '{name}' added", "success")
+        return redirect(f"/")
 
 
 #-----------------------------------------------------------
