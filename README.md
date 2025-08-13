@@ -1,6 +1,6 @@
 # fAMILY TO-DO APP
 
-by mirai hasegawa
+by Mirai Hasegawa
 
 
 ---
@@ -9,11 +9,11 @@ by mirai hasegawa
 
 This app will allow a parent to organise everyday jobs for a family
 
-- Show a list of jobs that need to be done
-- Allow new jobs to be added
-- Feature 3 here
-- Feature 4 here
-- Feature 5 here
+- Show a list of tasks that need to be done
+- Allow new groups/tasks to be added
+- Know the due of the task
+- Tasks can be marked as complated 
+- Tasks can delate
 
 
 ---
