@@ -28,11 +28,24 @@ This Figma demo shows the initial layout design for the UI:
 
 ### Testing
 
-Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
+I show the demo to my host mother to get comments/feedback. 
+
+The feedback:
+>There is no description of tasks. 
+
+>It's going to better that it has option to select colours for each tasks.
+
+>I would like to attach a picture not only for groups, but also per tasks.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+I updated the UI of the prototype
+- I added a page to delete the task/group.
+- Add buttons to move setting page with all of them.
+- Change it to upload a pic with all of them.
+- made a page to write description of the tasks.
+
+Here is the updated UI flow
 
 *FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
 
