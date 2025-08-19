@@ -2,8 +2,9 @@
 
 ## Identified Problem or Need
 
-Replace this text with a clearly stated problem or need that exists that your project will attempt to solve / fulfil.
+If you have any plans in daily, it need to be organised and scheduled to prevent missing the plans. Remembering what task/plans you have.
 
+It is a kind of To-Do list.
 
 ## End-User Requirements
 

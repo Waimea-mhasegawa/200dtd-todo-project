@@ -47,6 +47,8 @@ I updated the UI of the prototype
 
 Here is the updated UI flow
 
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="400" height="700" src="https://embed.figma.com/proto/oZlbZkB9t1DuZ3BAfeBO0E/Family-To-Do-V2?scaling=scale-down&content-scaling=fixed&page-id=0%3A1&node-id=2-2&starting-point-node-id=2%3A2&embed-host=share" allowfullscreen></iframe>
+
 *FIGMA IMPROVED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
 
 
@@ -54,26 +56,36 @@ Here is the updated UI flow
 
 ## Refined UI Prototype
 
-Having established the layout of the UI screens, the prototype was refined visually, in terms of colour, fonts, etc.
+### Colours
 
-This Figma demo shows the UI with refinements applied:
+My host mother said the colour works well but I think it's too simple, so I explored some colour palettes that I thought would work well for Initial settings.
 
-*FIGMA REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
+- [Palette 1 Link](https://www.realtimecolors.com/?colors=050704-fbfcfa-87a366-afcfc0-81b3a9&fonts=Inter-Inter)
+
+- [Palette 2 Link](https://www.realtimecolors.com/?colors=011a1e-f0fcff-0dc9f8-79b4fb-3e73f9&fonts=Inter-Inter)
+
+![Palette1](screenshots/palette1.png)
+
+![Palette2](screenshots/palette2.png)
 
 ### Testing
 
-Replace this text with notes about what you did to test the UI flow and the outcome of the testing.
+Both of them are look well.
+
+I Show these UI to the user, my host mother to see which one is her favourite.
+
+-> She prefer Palette 1.
+
+I based on the feedback, I'll create the app with this colour palette.
 
 ### Changes / Improvements
 
-Replace this text with notes any improvements you made as a result of the testing.
+I renewed the UI based on the feedback above. I changed it with the green palette.
 
-*FIGMA IMPROVED REFINED PROTOTYPE - PLACE THE FIGMA EMBED CODE HERE - MAKE SURE IT IS SET SO THAT EVERYONE CAN ACCESS IT*
-
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="400" height="700" src="https://embed.figma.com/proto/lJMHi0EA2JHtsHo1LcQCR4/Family-To-Do-V3?node-id=1-45&p=f&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A2&embed-host=share" allowfullscreen></iframe>
 
 ---
 
 ## Sprint Review
 
-Replace this text with a statement about how the sprint has moved the project forward - key success point, any things that didn't go so well, etc.
-
+I think the design is great and organised. I got some ideas of improvable user-focused.
