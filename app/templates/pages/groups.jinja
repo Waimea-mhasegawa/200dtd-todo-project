@@ -1,7 +1,7 @@
 {#=====================================================
-  Things list page
-  - List of things passed in as 'things' array
-  - Form for adding a new thing
+  Groups list page
+  - List of groups passed in as 'groups' array
+  - Form for adding a new group
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
@@ -9,40 +9,41 @@
 
 {% block title %}
 
-    Flask Demo - All Things
+    Family To-Do - All Groups
 
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>Things...</h1>
+    <h1>Groups</h1>
 
 
     <article>
-
         <ul>
-            {% for thing in things %}
+            {% for group in groups %}
 
                 <li>
-                    <a href="/thing/{{ thing.id }}">
-                        {{ thing.name }}
+                    <a href="/group/{{ group.id }}/tasks">
+                        {{ group.name }}
                     </a>
+                    {% if group.picture %}
+                        <img src="{{ group.picture }}" alt="{{ group.name }}" width="40">
+                    {% endif %}
                 </li>
 
             {% else %}
 
-                <p>None!</p>
+                <p>No groups yet!</p>
 
             {% endfor %}
         </ul>
-
     </article>
 
 
     <article>
 
-        <h3>Add a New Thing...</h3>
+        <h3>Add a New Group...</h3>
 
         <form action="/add" method="POST">
 

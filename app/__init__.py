@@ -42,14 +42,103 @@ def index():
     
 
 #-----------------------------------------------------------
-# Todo page route
+# Groups page route - show all the groups
 #-----------------------------------------------------------
-@app.get("/todo/<group>")
-def show_todo_details(group):
+@app.get("/groups")
+def show_groups():
     with connect_db() as client:
         # Get the details from the DB
-        sql = "SELECT group, name, priority FROM todo WHERE group "
+        sql = "SELECT id, name, colour, picture FROM groups ORDER BY name ASC "
+        result = client.execute(sql)
+        groups = result.rows
+        return render_template("pages/groups.jinja")
 
+
+#-----------------------------------------------------------
+# Route for adding a group
+#-----------------------------------------------------------
+@app.post("/groups/add")
+def add_group():
+    name = html.escape(request.form.get("name"))
+    colour = request.form.get("colour")
+    picture = request.form.get("picture")
+
+    with connect_db() as client:
+        sql = "INSERT INTO groups (name, colour, picture) VALUES (?, ?, ?)"
+        client.execute(sql,[name, colour, picture])
+
+    flash(f"group '{name}' added", "success.")
+    return redirect("/groups")
+
+
+#-----------------------------------------------------------
+# Route for deleting a group, Id given in the route
+#-----------------------------------------------------------
+@app.get("groups/<int:id>/delete")
+def delete_group(id):
+    with connect_db() as client:
+        # Delete the tasks first
+        client.execute("DELETE FROM tasks WHERE group_id=?", [id])
+        client.execute("DELETE FROM groups WHERE id=?", [id])
+
+    flash(f"Group deleted", "success.")
+    return redirect("/groups")
+
+
+#-----------------------------------------------------------
+# Tasks page route - Show all the tasks
+#-----------------------------------------------------------
+@app.get("/groups/<int:group_id>/tasks")
+def show_tasks(group_id):
+    with connect_db() as client:
+        sql = """
+            SELECT id, name, description, colour, picture, priority FROM tasks WHERE group_id=?
+            ORDER BY priority DESC
+            """
+        result = client.execute(sql, [group_id])
+        tasks = result.rows
+
+        sql_group = "SELECT id, name FROM groups WHERE id=?"
+        group_result = client.execute(sql_group, [group_id])
+        group = group_result.rows[0] if group_result.rows else None
+
+        return render_template("pages/tasks.jinja", group=group, tasks=tasks)
+
+
+#-----------------------------------------------------------
+# Route for adding a Task, using data posted from a form
+#-----------------------------------------------------------
+@app.post("/tasks/add")
+def add_task():
+    group_id = request.form.get("group_id")
+    name = html.escape(request.form.get("name"))
+    description = request.form.get("description")
+    colour = request.form.get("colour")
+    picture = request.form.get("picture")
+    priority = request.form.get("priority")
+
+    with connect_db() as client:
+        sql = """
+            INSERT INTO tasks (group_id, name, description, colour, picture, priority)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """
+        client.execute(sql, [group_id, name, description, colour, picture, priority])
+
+    flash(f"Task '{name}' added", "success")
+    return redirect(f"/groups/{group_id}/tasks")
+
+
+#-----------------------------------------------------------
+# Route for deleting a task, Id given in the route
+#-----------------------------------------------------------
+@app.get("/tasks<int:id>/delete")
+def delete_task(id):
+    with connect_db() as client:
+        group_id = client.execute("SELECT group_id FROM tasks WHERE id=?", [id]).rows[0]["group_id"]
+        client.execute("DELETE FROM tasks WHERE id=?", [id])
+
+    flash(f"Task deleted", "success.")
+    return redirect(f"/groups/{group_id}/tasks")
 
 #-----------------------------------------------------------
 # About page route
@@ -57,115 +146,5 @@ def show_todo_details(group):
 @app.get("/about/")
 def about():
     return render_template("pages/about.jinja")
-
-
-#-----------------------------------------------------------
-# Things page route - Show all the things, and new thing form
-#-----------------------------------------------------------
-@app.get("//")
-def show_all_things():
-    with connect_db() as client:
-        # Get all the things from the DB
-        sql = "SELECT id, name FROM things ORDER BY name ASC"
-        params = []
-        result = client.execute(sql, params)
-        things = result.rows
-
-        # And show them on the page
-        return render_template("pages/things.jinja", things=things)
-
-
-#-----------------------------------------------------------
-# Thing page route - Show details of a single thing
-#-----------------------------------------------------------
-@app.get("/thing/<int:id>")
-def show_one_thing(id):
-    with connect_db() as client:
-        # Get the thing details from the DB
-        sql = "SELECT id, name, price FROM things WHERE id=?"
-        params = [id]
-        result = client.execute(sql, params)
-
-        # Did we get a result?
-        if result.rows:
-            # yes, so show it on the page
-            thing = result.rows[0]
-            return render_template("pages/thing.jinja", thing=thing)
-
-        else:
-            # No, so show error
-            return not_found_error()
-
-
-#-----------------------------------------------------------
-# Route for adding a todo, using data posted from a form
-#-----------------------------------------------------------
-@app.post("/add")
-def add_a_todo():
-    # Get the data from the form
-    group = request.form.get("group")
-     
-    print(group)
-
-    # Sanitise the text inputs
-    group = html.escape(group)
-
-    with connect_db() as client:
-        # Add the todo to the DB
-        sql = """
-            INSERT INTO todo (group) 
-            VALUES (?)
-        """
-        params = [group]
-        client.execute(sql, params)
-
-        # Go back to the home page
-        flash(f"Todo '{group}' added", "success")
-        return redirect("/")
-    
-
-#-----------------------------------------------------------
-# Route for adding a team, using data posted from a form
-#-----------------------------------------------------------
-
-@app.post("/add-todo")
-def add_a_todo():
-    # Get the data from the form
-    type = request.form.get("type")
-    name  = request.form.get("name")
-    priority = request.form.get("priority")
-
-    # Sanitise the text inputs
-    name = html.escape(name)
-    priority = html.escape(priority)
-
-    with connect_db() as client:
-        # Add the todo thing to the DB
-        sql = """
-            INSERT INTO things (type, name, priority)
-            VALUES (?, ?, ?)
-        """
-        params = [type, name, priority]
-        client.execute(sql,params)
-
-        # Go back to the home page
-        flash(f"Todo '{name}' added", "success")
-        return redirect(f"/")
-
-
-#-----------------------------------------------------------
-# Route for deleting a thing, Id given in the route
-#-----------------------------------------------------------
-@app.get("/delete/<int:id>")
-def delete_a_thing(id):
-    with connect_db() as client:
-        # Delete the thing from the DB
-        sql = "DELETE FROM things WHERE id=?"
-        params = [id]
-        client.execute(sql, params)
-
-        # Go back to the home page
-        flash("Thing deleted", "success")
-        return redirect("/things")
 
 
