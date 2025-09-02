@@ -9,7 +9,7 @@
 
 {% block title %}
 
-    Family To-Do - All Groups
+    Family To-Do - All Groups & Add a New Group
 
 {% endblock %}
 
@@ -50,19 +50,24 @@
             <input
                 type="text"
                 name="name"
-                placeholder="Name of new thing"
+                placeholder="Group Name"
                 required
             >
 
             <input
-                type="number"
-                name="price"
-                min="0"
-                placeholder="Price in dollars"
+                type="color"
+                name="colour"
+                value="#4CAF50"
+                placeholder="Pick a group colour"
                 required
             >
 
-            <button>Add the Thing</button>
+            <input
+                type="file"
+                name="picture"
+                accept="image/*"
+            >
+            <button>Add the Group</button>
 
         </form>
 

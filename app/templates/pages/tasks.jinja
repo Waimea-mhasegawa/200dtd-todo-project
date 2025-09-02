@@ -1,7 +1,7 @@
 {#=====================================================
-  Thing page
-  - Shows details of a single thing
-  - Has a delete link to remove it
+  Task page for group
+  - Shows all tasks of each groups
+  - Form to add a new task
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
@@ -9,32 +9,93 @@
 
 {% block title %}
 
-    Flask Demo - Single Thing
+    Family To-Do - Tasks in {{ group.name }}
 
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>A Single Thing...</h1>
+    <h1>Tasks in "{{ group.name }}"</h1>
 
 
     <article>
+        <ul>
+        {% for task in tasks %}
+            <li>
+            <strong>{{ task.name }}</strong>
 
-        <header>
-            <h3>{{ thing.name }}</h3>
-        </header>
+            {% if task.description %}
+                - {{ task.descripton }}
+            {% endif %}    
 
-        <p>Price: <strong>${{ thing.price }}</strong></p>
+            (Priority: {{ task.priority }})
 
-        <footer>
-            <a href="/delete/{{ thing.id }}" onclick="return confirm('Really delete?');">Delete</a>
-        </footer>
+            {% if task.colour %}
+            <span slyle="display:inline-block; width:12px; height:12px; background:{{ task.colour }}">
+            </span>
+            {% endif %}
 
+            {% if task.picture %}
+                <img src="{{ task.picture }}" alt="task picture" width="40">
+            {% endif %}
+
+            <a href="/delete/task{{ task.id }}" onclick="return confirm('Delete the task?');">x</a>
+
+            </li>
+            {% else %}
+                <p>No tasks in this group.</p>
+            {% endfor %}
+        </ul>
     </article>
 
+    <article>
+        <h3>Add a New Task</h3>
+        <form action="/add/task" method="POST" enctype="multipart/form-data">
+        
+        <input type="hidden" name="group_id" value="{{ group.id }}">
 
-    <a role="button" href="/things">Back to Thing List</a>
+        <input
+            type="text"
+            name="name"
+            placeholder="Task name"
+            required
+        >
+
+        <textarea
+            name="description"
+            placeholder="Task description"
+        ></textarea>
+
+        <label>
+            Priority:
+            <select name="priority" aria-label="Select" required>
+                <option selected disabled value="">Priority</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </label>
+
+        <input
+            type="color"
+            name="colour"
+            value="#2196F3"
+            title="Pick a Task Colour"
+        >
+
+        <input
+            type="file"
+            name="picture"
+            accept="image/*"
+        >
+        
+        <button>Add a New Task</button>
+        </form>
+    </article>
+
+    <a role="button" href="/groups">← Back to Groups</a>
 
 {% endblock %}
-
