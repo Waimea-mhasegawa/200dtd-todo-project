@@ -24,12 +24,63 @@
             {% for group in groups %}
 
                 <li>
-                    <a href="/group/{{ group.id }}/tasks">
+                    <a href="/groups/{{ group.id }}/tasks">
                         {{ group.name }}
                     </a>
                     {% if group.picture %}
                         <img src="{{ group.picture }}" alt="{{ group.name }}" width="40">
                     {% endif %}
+
+                    {# Add a edit link #}
+                    <a href="/groups/{{ group.id }}/edit">Edit</a>
+
+                    {# Add a delete link #}
+                    <a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">Delete</a>
+                </li>
+
+                <li>
+                    <a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a>
+                    {% if group.picture %}
+                        <img src="{{ group.picture }}" alt="{{ group.name }}" width="40">
+                    {% endif %}
+
+                    {# Edit button #}
+                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">Edit</button>
+
+                    {# Delete button #}
+                    <a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">Delete</a>
+
+                    {# Edit modal #}
+                    <dialog id="edit-group-{{ group.id }}">
+                        <article>
+                            <h3>Edit Group "{{ group.name }}"</h3>
+
+                            <form action="/groups/{{ group.id }}/edit" method="POST" enctype="multipart/form-data">
+
+                                <label>
+                                    Group Name:
+                                    <input type="text" name="name" value="{{ group.name }}" required>
+                                </label>
+
+                                <label>
+                                    Group Colour:
+
+                                    <input type="color" name="colour" value="{{ group.colour }}" required>
+                                </label>
+
+                                <label>
+                                    Group Picture:
+
+                                    <input type="file" name="picture" accept="image/*">
+                                </label>
+
+                                <footer>
+                                    <button type="submit">Save Changes</button>
+                                    <button type="button" onclick="document.getElementById('edit-group-{{ group.id }}').close()">Cancel</button>
+                                </footer>
+                            </form>
+                        </article>
+                    </dialog>
                 </li>
 
             {% else %}
@@ -38,39 +89,6 @@
 
             {% endfor %}
         </ul>
-    </article>
-
-
-    <article>
-
-        <h3>Add a New Group...</h3>
-
-        <form action="/add" method="POST">
-
-            <input
-                type="text"
-                name="name"
-                placeholder="Group Name"
-                required
-            >
-
-            <input
-                type="color"
-                name="colour"
-                value="#4CAF50"
-                placeholder="Pick a group colour"
-                required
-            >
-
-            <input
-                type="file"
-                name="picture"
-                accept="image/*"
-            >
-            <button>Add the Group</button>
-
-        </form>
-
     </article>
 
 {% endblock %}

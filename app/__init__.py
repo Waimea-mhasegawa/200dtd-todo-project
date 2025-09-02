@@ -1,8 +1,8 @@
 #===========================================================
-# YOUR PROJECT TITLE HERE
-# YOUR NAME HERE
+# Family To-Do
+# Mirai Hasegawa
 #-----------------------------------------------------------
-# BRIEF DESCRIPTION OF YOUR PROJECT HERE
+# To-Do list......
 #===========================================================
 
 from flask import Flask, render_template, request, flash, redirect, flash
@@ -31,6 +31,8 @@ init_datetime(app)  # Handle UTC dates in timestamps
 @app.get("/")
 def index():
         # Show them on the page
+    with connect_db() as client:
+        groups = client.execute("SELECT id, name, colour, picture FROM groups ORDER BY name ASC").rows
         return render_template("pages/home.jinja")
     
 
@@ -50,6 +52,10 @@ def show_groups():
 #-----------------------------------------------------------
 # Route for adding a group
 #-----------------------------------------------------------
+@app.get("/groups/add")
+def show_add_group():
+    return render_template("pages/add-group.jinja")
+
 @app.post("/groups/add")
 def add_group():
     name = html.escape(request.form.get("name"))
@@ -62,6 +68,8 @@ def add_group():
 
     flash(f"group '{name}' added", "success.")
     return redirect("/groups")
+
+
 
 
 #-----------------------------------------------------------
@@ -101,6 +109,10 @@ def show_tasks(group_id):
 #-----------------------------------------------------------
 # Route for adding a Task, using data posted from a form
 #-----------------------------------------------------------
+@app.get("/tasks/add/<int:group_id>")
+def show_add_task(group_id):
+    return render_template("pages/add-task.jinja", group_id=group_id)
+
 @app.post("/tasks/add")
 def add_task():
     group_id = request.form.get("group_id")
@@ -119,6 +131,55 @@ def add_task():
 
         flash(f"Task '{name}' added", "success")
         return redirect(f"/groups/{group_id}/tasks")
+    
+
+#-----------------------------------------------------------
+# Route for editing a group
+#-----------------------------------------------------------
+@app.get("/groups/<int:id>/edit")
+def show_edit_group(id):
+    with connect_db() as client:
+        group = client.execute("SELECT * FROM groups WHERE id=?", [id]).rows[0]
+    return render_template("pages/edit_group.jinja", group=group)
+
+@app.post("/groups/<int:id>/edit")
+def edit_group(id):
+    name = html.escape(request.form.get("name"))
+    colour = request.form.get("colour")
+    picture = request.form.get("picture")
+    with connect_db() as client:
+        client.execute(
+            "UPDATE groups SET name=?, colour=?, picture=? WHERE id=?",
+            [name, colour, picture, id]
+        )
+    flash(f"Group '{name}' updated", "success")
+    return redirect("/groups")
+
+
+#-----------------------------------------------------------
+# Route for editing a task
+#-----------------------------------------------------------
+@app.get("/tasks/<int:id>/edit")
+def show_edit_task(id):
+    with connect_db() as client:
+        task = client.execute("SELECT * FROM tasks WHERE id=?", [id]).rows[0]
+    return render_template("pages/edit_task.jinja", task=task)
+
+@app.post("/tasks/<int:id>/edit")
+def edit_task(id):
+    group_id = request.form.get("group_id")
+    name = html.escape(request.form.get("name"))
+    description = request.form.get("description")
+    priority = int(request.form.get("priority"))
+    colour = request.form.get("colour")
+    picture = request.form.get("picture")
+    with connect_db() as client:
+        client.execute(
+            "UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture=? WHERE id=?",
+            [name, description, priority, colour, picture, id]
+        )
+    flash(f"Task '{name}' updated", "success")
+    return redirect(f"/groups/{group_id}/tasks")
 
 
 #-----------------------------------------------------------
@@ -128,8 +189,9 @@ def add_task():
 def task_complete(id):
     with connect_db() as client:
         client.execute("UPDATE tasks SET complete=1 WHERE id=?",[id])
-        flash("Task marked as complete", "success")
-        return redirect(f"/groups/tasks")
+        group_id = client.execute("SELECT group_id FROM tasks WHERE id-?", [id]).rows[0]["group_id"]
+    flash("Task marked as complete", "success")
+    return redirect(f"/groups/{ group_id }/tasks")
 
 
 #-----------------------------------------------------------
@@ -139,13 +201,14 @@ def task_complete(id):
 def task_incomplete(id):
     with connect_db() as client:
         client.execute("UPDATE tasks SET complete=0 WHERE id-?",[id])
-        flash("Task marked as incomplete")
-        return redirect(f"/groups/tasks")
+        group_id = client.execute("SELECT group_id FROM tasks WHERE id-?", [id]).rows[0]["group_id"]
+    flash("Task marked as incomplete")
+    return redirect(f"/groups/{ group_id }/tasks")
 
 #-----------------------------------------------------------
 # Route for deleting a task, Id given in the route
 #-----------------------------------------------------------
-@app.get("/tasks<int:id>/delete")
+@app.get("/tasks/<int:id>/delete")
 def delete_task(id):
     with connect_db() as client:
         group_id = client.execute("SELECT group_id FROM tasks WHERE id=?", [id]).rows[0]["group_id"]

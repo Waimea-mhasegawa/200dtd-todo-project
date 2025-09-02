@@ -32,7 +32,7 @@
             (Priority: {{ task.priority }})
 
             {% if task.colour %}
-            <span slyle="display:inline-block; width:12px; height:12px; background:{{ task.colour }}">
+            <span style="display:inline-block; width:12px; height:12px; background:{{ task.colour }}">
             </span>
             {% endif %}
 
@@ -40,60 +40,83 @@
                 <img src="{{ task.picture }}" alt="task picture" width="40">
             {% endif %}
 
-            <a href="/delete/task{{ task.id }}" onclick="return confirm('Delete the task?');">x</a>
+            {# Add a link for edit #}
+            <a href="/tasks/{{ task.id }}/edit"></a>
+            {# Add a link to delete #}"
+
+            <a href="/tasks{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a>
 
             </li>
+
+            <li>
+                {{ task.name }}
+
+    {# Edit button #}
+                <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">Edit</button>
+
+    {# Delete button #}
+                <a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete this task?');">Delete</a>
+
+    {# Edit modal #}
+                <dialog id="edit-task-{{ task.id }}">
+
+                    <article>
+                        <h3>Edit Task "{{ task.name }}"</h3>
+
+                        <form action="/tasks/{{ task.id }}/edit" method="POST" enctype="multipart/form-data">
+
+                            <input type="hidden" name="group_id" value="{{ task.group_id }}">
+
+                            <label>
+                                Task Name:
+
+                                <input type="text" name="name" value="{{ task.name }}" required>
+                            </label>
+
+                            <label>
+                                Description:
+
+                                <textarea name="description">{{ task.description }}</textarea>
+                            </label>
+
+                            <label>
+                                Priority:
+
+                                <select name="priority" required>
+
+                                    {% for p in [1,2,3,4,5] %}
+                                        <option value="{{ p }}" {% if task.priority == p %}selected{% endif %}>{{ p }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </label>
+
+                            <label>
+                                Task Colour:
+
+                                <input type="color" name="colour" value="{{ task.colour }}">
+                            </label>
+
+                            <label>
+                                Picture:
+
+                                <input type="file" name="picture" accept="image/*">
+                            </label>
+
+                            <footer>
+                                <button type="submit">Save Changes</button>
+                                <button type="button" onclick="document.getElementById('edit-task-{{ task.id }}').close()">Cancel</button>
+                            </footer>
+                        </form>
+                    </article>
+                </dialog>
+            </li>
+            
             {% else %}
                 <p>No tasks in this group.</p>
             {% endfor %}
         </ul>
-    </article>
 
-    <article>
-        <h3>Add a New Task</h3>
-        <form action="/add/task" method="POST" enctype="multipart/form-data">
-        
-        <input type="hidden" name="group_id" value="{{ group.id }}">
-
-        <input
-            type="text"
-            name="name"
-            placeholder="Task name"
-            required
-        >
-
-        <textarea
-            name="description"
-            placeholder="Task description"
-        ></textarea>
-
-        <label>
-            Priority:
-            <select name="priority" aria-label="Select" required>
-                <option selected disabled value="">Priority</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </label>
-
-        <input
-            type="color"
-            name="colour"
-            value="#2196F3"
-            title="Pick a Task Colour"
-        >
-
-        <input
-            type="file"
-            name="picture"
-            accept="image/*"
-        >
-        
-        <button>Add a New Task</button>
-        </form>
     </article>
 
     <a role="button" href="/groups">← Back to Groups</a>

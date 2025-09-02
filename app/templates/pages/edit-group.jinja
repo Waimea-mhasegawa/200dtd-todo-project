@@ -1,0 +1,31 @@
+{% extends 'pages/base.jinja' %}
+
+{% block title %}Edit Group{% endblock %}
+
+{% block content %}
+<h1>Edit Group "{{ group.name }}"</h1>
+
+<form action="/groups/{{ group.id }}/edit" method="POST" enctype="multipart/form-data">
+    <label>
+        Group Name:
+        <input type="text" name="name" value="{{ group.name }}" required>
+    </label>
+
+    <label>
+        Group Colour:
+        <input type="color" name="colour" value="{{ group.colour }}" required>
+    </label>
+
+    <label>
+        Group Picture:
+        <input type="file" name="picture" accept="image/*">
+        {% if group.picture %}
+            <img src="{{ group.picture }}" alt="{{ group.name }}" width="50">
+        {% endif %}
+    </label>
+
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="/groups" role="button">← Back to Groups</a>
+{% endblock %}

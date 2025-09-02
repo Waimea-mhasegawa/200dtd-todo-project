@@ -1,0 +1,48 @@
+{% extends 'pages/base.jinja' %}
+
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<h1>Edit Task "{{ task.name }}"</h1>
+
+<form action="/tasks/{{ task.id }}/edit" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="group_id" value="{{ task.group_id }}">
+
+    <label>
+        Task Name:
+        <input type="text" name="name" value="{{ task.name }}" required>
+    </label>
+
+    <label>
+        Description:
+        <textarea name="description">{{ task.description }}</textarea>
+    </label>
+
+    <label>
+        Priority:
+        <select name="priority" required>
+            <option disabled value="">Priority</option>
+            {% for p in [1,2,3,4,5] %}
+                <option value="{{ p }}" {% if task.priority == p %}selected{% endif %}>{{ p }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label>
+        Task Colour:
+        <input type="color" name="colour" value="{{ task.colour }}">
+    </label>
+
+    <label>
+        Picture:
+        <input type="file" name="picture" accept="image/*">
+        {% if task.picture %}
+            <img src="{{ task.picture }}" alt="{{ task.name }}" width="50">
+        {% endif %}
+    </label>
+
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="/groups/{{ task.group_id }}/tasks" role="button">← Back to Tasks</a>
+{% endblock %}

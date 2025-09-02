@@ -1,0 +1,57 @@
+{% extends 'pages/base.jinja' %}
+
+{% block title %}
+    Add a New Task
+{% endblock %}
+
+{% block content %}
+<h1>Add a New Task</h1>
+
+<form action="/tasks/add" method="POST" enctype="multipart/form-data">
+        
+    <input type="hidden" name="group_id" value="{{ group.id }}">
+
+    <input
+        type="text"
+        name="name"
+        placeholder="Task name"
+        required
+    >
+
+    <textarea
+        name="description"
+        placeholder="Task description"
+    ></textarea>
+
+    <label>
+        Priority:
+        <select name="priority" required>
+            <option selected disabled value="">Priority</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </label>
+
+    <input
+        type="color"
+        name="colour"
+        value="#2196F3"
+        required
+    >
+
+    <input
+        type="file"
+        name="picture"
+         accept="image/*"
+    >
+        
+    <button>Add a New Task</button>
+</form>
+    
+
+    <a href="/groups/{{ group_id }}/tasks" role="button">← Back to Tasks</a>
+
+{% endblock %}
