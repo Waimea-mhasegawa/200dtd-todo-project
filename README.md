@@ -1,4 +1,4 @@
-# fAMILY TO-DO APP
+# FAMILY TO-DO APP
 
 by Mirai Hasegawa
 
