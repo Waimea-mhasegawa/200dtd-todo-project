@@ -28,18 +28,18 @@ init_datetime(app)  # Handle UTC dates in timestamps
 #-----------------------------------------------------------
 # Home page route
 #-----------------------------------------------------------
-@app.get("/")
-def index():
-        # Show them on the page
-    with connect_db() as client:
-        groups = client.execute("SELECT id, name, colour, picture FROM groups ORDER BY name ASC").rows
-        return render_template("pages/home.jinja")
+# @app.get("/")
+# def index():
+#         # Show them on the page
+#     with connect_db() as client:
+#         groups = client.execute("SELECT id, name, colour, picture FROM groups ORDER BY name ASC").rows
+#         return render_template("pages/home.jinja")
     
 
 #-----------------------------------------------------------
 # Groups page route - show all the groups
 #-----------------------------------------------------------
-@app.get("/groups")
+@app.get("/")
 def show_groups():
     with connect_db() as client:
         # Get the details from the DB
@@ -64,7 +64,8 @@ def add_group():
 
     with connect_db() as client:
         sql = "INSERT INTO groups (name, colour, picture) VALUES (?, ?, ?)"
-        client.execute(sql,[name, colour, picture])
+        values = [name, colour, picture]
+        client.execute(sql, values)
 
     flash(f"group '{name}' added", "success.")
     return redirect("/groups")
@@ -82,7 +83,7 @@ def delete_group(id):
         client.execute("DELETE FROM tasks WHERE group_id=?", [id])
         client.execute("DELETE FROM groups WHERE id=?", [id])
 
-    flash(f"Group deleted", "success.")
+    flash(f"Group deleted", "warning")
     return redirect("/groups")
 
 
@@ -127,7 +128,8 @@ def add_task():
             INSERT INTO tasks (group_id, name, description, colour, picture, priority)
             VALUES (?, ?, ?, ?, ?, ?)
         """
-        client.execute(sql, [group_id, name, description, colour, picture, priority])
+        values = [group_id, name, description, colour, picture, priority]
+        client.execute(sql, values)
 
         flash(f"Task '{name}' added", "success")
         return redirect(f"/groups/{group_id}/tasks")

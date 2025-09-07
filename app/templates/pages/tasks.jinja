@@ -42,22 +42,18 @@
 
             {# Add a link for edit #}
             <a href="/tasks/{{ task.id }}/edit"></a>
-            {# Add a link to delete #}"
 
+            {# Edit button #}
+            <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">Edit</button>
+                        
+            {# Add a link to delete & Delete button #}
             <a href="/tasks{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a>
-
             </li>
+            
 
             <li>
-                {{ task.name }}
-
-    {# Edit button #}
-                <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">Edit</button>
-
-    {# Delete button #}
-                <a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete this task?');">Delete</a>
-
-    {# Edit modal #}
+                
+            {# Edit modal #}
                 <dialog id="edit-task-{{ task.id }}">
 
                     <article>

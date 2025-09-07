@@ -23,23 +23,9 @@
         <ul>
             {% for group in groups %}
 
+                
                 <li>
-                    <a href="/groups/{{ group.id }}/tasks">
-                        {{ group.name }}
-                    </a>
-                    {% if group.picture %}
-                        <img src="{{ group.picture }}" alt="{{ group.name }}" width="40">
-                    {% endif %}
-
-                    {# Add a edit link #}
-                    <a href="/groups/{{ group.id }}/edit">Edit</a>
-
-                    {# Add a delete link #}
-                    <a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">Delete</a>
-                </li>
-
-                <li>
-                    <a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a>
+                    <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
                     {% if group.picture %}
                         <img src="{{ group.picture }}" alt="{{ group.name }}" width="40">
                     {% endif %}
@@ -48,7 +34,7 @@
                     <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">Edit</button>
 
                     {# Delete button #}
-                    <a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">Delete</a>
+                    <strong class="group"><a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">x</a></strong>
 
                     {# Edit modal #}
                     <dialog id="edit-group-{{ group.id }}">
