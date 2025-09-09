@@ -5,33 +5,39 @@
 {% endblock %}
 
 {% block content %}
-<h1>Add a New Group</h1>
-
-<form action="/groups/add" method="POST" enctype="multipart/form-data">
-
-    <input
-        type="text"
-        name="name"
-        placeholder="Group Name"
-        required
-    >
-
-    <input
-        type="color"
-        name="colour"
-        value="#4CAF50"
-        placeholder="Pick a group colour"
-        required
-    >
-
-    <input
-        type="file"
-        name="picture"
-        accept="image/*"
-    >
-    <button>Add the Group</button>
-</form>
 
 <a href="/groups" role="button">← Back to Groups</a>
+
+    <article>
+        <h1>Add a New Group</h1>
+
+        <form action="/groups/add" method="POST" enctype="multipart/form-data">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Group Name"
+                required
+            >
+
+            <input
+                type="color"
+                name="colour"
+                value="#4CAF50"
+                placeholder="Pick a group colour"
+                required
+            >
+
+            <input
+                type="file"
+                name="picture"
+                accept="image/"
+            >
+
+            <button>Add the Group</button>
+        </form>
+    </article>
+
+
 
 {% endblock %}

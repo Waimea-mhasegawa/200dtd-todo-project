@@ -13,6 +13,7 @@ from app.helpers.db      import connect_db
 from app.helpers.errors  import init_error, not_found_error
 from app.helpers.logging import init_logging
 from app.helpers.time    import init_datetime, utc_timestamp, utc_timestamp_now
+from app.helpers.images  import image_file
 
 
 # Create the app
@@ -39,14 +40,23 @@ init_datetime(app)  # Handle UTC dates in timestamps
 #-----------------------------------------------------------
 # Groups page route - show all the groups
 #-----------------------------------------------------------
-@app.get("/")
+@app.get("/groups")
 def show_groups():
     with connect_db() as client:
         # Get the details from the DB
-        sql = "SELECT id, name, colour, picture FROM groups ORDER BY name ASC "
+        sql = "SELECT id, name, colour, picture_type FROM groups ORDER BY name ASC "
         result = client.execute(sql)
         groups = result.rows
         return render_template("pages/groups.jinja", groups=groups)
+
+
+@app.get("/group/<int:id>/image")
+def show_group_image(id):
+    with connect_db() as client:
+        sql = "SELECT picture_data, picture_type FROM groups WHERE id=? "
+        result = client.execute(sql, [id])
+    
+        return image_file(result, "picture_data", "picture_type")
 
 
 #-----------------------------------------------------------
@@ -60,11 +70,17 @@ def show_add_group():
 def add_group():
     name = html.escape(request.form.get("name"))
     colour = request.form.get("colour")
-    picture = request.form.get("picture")
+    picture = request.files.get("picture")
+
+    if picture:
+        picture_data = picture.read()
+        picture_type = picture.mimetype
+    else:
+        picture_data =  None
 
     with connect_db() as client:
-        sql = "INSERT INTO groups (name, colour, picture) VALUES (?, ?, ?)"
-        values = [name, colour, picture]
+        sql = "INSERT INTO groups (name, colour, picture_data, picture_type) VALUES (?, ?, ?, ?)"
+        values = [name, colour, picture_data, picture_type]
         client.execute(sql, values)
 
     flash(f"group '{name}' added", "success.")
@@ -94,7 +110,7 @@ def delete_group(id):
 def show_tasks(group_id):
     with connect_db() as client:
         sql = """
-            SELECT id, name, description, colour, picture, priority FROM tasks WHERE group_id=?
+            SELECT id, name, description, colour, picture_type, priority FROM tasks WHERE group_id=?
             ORDER BY priority DESC
             """
         result = client.execute(sql, [group_id])
@@ -107,6 +123,14 @@ def show_tasks(group_id):
         return render_template("pages/tasks.jinja", group=group, tasks=tasks)
 
 
+@app.get("/group/<int:id>/tasks/image")
+def show_task_image(id):
+    with connect_db() as client:
+        sql = "SELECT picture_data, picture_type FROM groups WHERE id=? "
+        result = client.execute(sql, [id])
+    
+        return image_file(result, "picture_data", "picture_type")
+
 #-----------------------------------------------------------
 # Route for adding a Task, using data posted from a form
 #-----------------------------------------------------------
@@ -115,20 +139,26 @@ def show_add_task(group_id):
     return render_template("pages/add-task.jinja", group_id=group_id)
 
 @app.post("/tasks/add")
-def add_task():
+def add_task(group_id):
     group_id = request.form.get("group_id")
     name = html.escape(request.form.get("name"))
     description = request.form.get("description")
     colour = request.form.get("colour")
-    picture = request.form.get("picture")
+    picture = request.files.get("picture")
     priority = request.form.get("priority")
+
+    if picture:
+        picture_data = picture.read()
+        picture_type = picture.mimetype
+    else:
+        picture_data =  None
 
     with connect_db() as client:
         sql = """
-            INSERT INTO tasks (group_id, name, description, colour, picture, priority)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO tasks (group_id, name, description, colour, picture_data, picture_type, priority)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """
-        values = [group_id, name, description, colour, picture, priority]
+        values = [group_id, name, description, colour, picture_data, picture_type, priority]
         client.execute(sql, values)
 
         flash(f"Task '{name}' added", "success")
@@ -142,7 +172,7 @@ def add_task():
 def show_edit_group(id):
     with connect_db() as client:
         group = client.execute("SELECT * FROM groups WHERE id=?", [id]).rows[0]
-    return render_template("pages/edit_group.jinja", group=group)
+    return render_template("pages/edit-group.jinja", group=group)
 
 @app.post("/groups/<int:id>/edit")
 def edit_group(id):
@@ -165,7 +195,7 @@ def edit_group(id):
 def show_edit_task(id):
     with connect_db() as client:
         task = client.execute("SELECT * FROM tasks WHERE id=?", [id]).rows[0]
-    return render_template("pages/edit_task.jinja", task=task)
+    return render_template("pages/edit-task.jinja", task=task)
 
 @app.post("/tasks/<int:id>/edit")
 def edit_task(id):

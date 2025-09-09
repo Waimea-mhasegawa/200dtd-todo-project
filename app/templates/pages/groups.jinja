@@ -26,8 +26,14 @@
                 
                 <li>
                     <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
-                    {% if group.picture %}
-                        <img src="{{ group.picture }}" alt="{{ group.name }}" width="40">
+
+                    {% if group.colour %}
+                    <span style="display:inline-block; width:12px; height:12px; background:{{ group.colour }}">
+                    </span>
+                    {% endif %}
+
+                    {% if group.picture_type %}
+                        <img src="/group/{{ group.id }}/image" alt="{{ group.name }}" width="40">
                     {% endif %}
 
                     {# Edit button #}
@@ -76,6 +82,8 @@
             {% endfor %}
         </ul>
     </article>
+
+     <a href="/groups/add" role="button">Go to add a new group...</a>
 
 {% endblock %}
 
