@@ -28,14 +28,17 @@
             <strong>{{ task.name }}</strong>
 
             {% if task.description %}
-                - {{ task.descripton }}
+                - {{ task.description }}
             {% endif %}    
 
             (Priority: {{ task.priority }})
 
             {% if task.colour %}
-            <span style="display:inline-block; width:12px; height:12px; background:{{ task.colour }}">
-            </span>
+            <div class="task-card"
+                 style="background-color: {{ task.colour or '#f0f0f0' }};">
+                {{ task.name }}
+            </div>
+
             {% endif %}
 
             {% if task.picture %}

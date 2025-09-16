@@ -19,8 +19,8 @@
     <label>
         Group Picture:
         <input type="file" name="picture" accept="image/*">
-        {% if group.picture %}
-            <img src="{{ group.picture }}" alt="{{ group.name }}" width="50">
+        {% if group.picture_data %}
+            <img src="{{ url_for('show_group_image', id=group.id) }}" alt="{{ group.name }}" width="50">
         {% endif %}
     </label>
 

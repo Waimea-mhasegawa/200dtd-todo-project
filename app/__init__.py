@@ -126,7 +126,7 @@ def show_tasks(group_id):
 @app.get("/group/<int:id>/tasks/image")
 def show_task_image(id):
     with connect_db() as client:
-        sql = "SELECT picture_data, picture_type FROM groups WHERE id=? "
+        sql = "SELECT picture_data, picture_type FROM tasks WHERE id=? "
         result = client.execute(sql, [id])
     
         return image_file(result, "picture_data", "picture_type")

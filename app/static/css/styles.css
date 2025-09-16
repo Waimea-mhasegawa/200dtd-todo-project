@@ -43,6 +43,11 @@ header a {
     color: black;
 }
 
+.group-card {
+    padding:1rem;
+    border-radius: 8px;
+    font-weight: bold;
+}
 
 /* MESSAGES -------------------------------------------- */
 

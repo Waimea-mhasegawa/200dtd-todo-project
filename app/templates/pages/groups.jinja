@@ -28,8 +28,10 @@
                     <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
 
                     {% if group.colour %}
-                    <span style="display:inline-block; width:12px; height:12px; background:{{ group.colour }}">
-                    </span>
+                    <div class="group-card"
+                        style="background-color:{{ group.colour or '#cce5ff' }};">
+                        {{ group.name }}
+                    </div>
                     {% endif %}
 
                     {% if group.picture_type %}
