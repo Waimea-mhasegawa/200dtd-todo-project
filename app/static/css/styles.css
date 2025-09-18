@@ -40,13 +40,15 @@ header a {
 /* GROUP PAGE ---------------------------------------------*/
 
 .group {
-    color: black;
+    filter: invert(100%) grayscale(100%) contrast(100);
+    margin-right: 1rem;
 }
 
 .group-card {
     padding:1rem;
     border-radius: 8px;
     font-weight: bold;
+    width: fit-content;
 }
 
 /* MESSAGES -------------------------------------------- */

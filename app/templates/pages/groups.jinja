@@ -25,12 +25,14 @@
 
                 
                 <li>
-                    <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
+                    
 
                     {% if group.colour %}
                     <div class="group-card"
                         style="background-color:{{ group.colour or '#cce5ff' }};">
-                        {{ group.name }}
+                    <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
+                    {# Edit button #}
+                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">:</button>    
                     </div>
                     {% endif %}
 
@@ -38,8 +40,7 @@
                         <img src="/group/{{ group.id }}/image" alt="{{ group.name }}" width="40">
                     {% endif %}
 
-                    {# Edit button #}
-                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">:</button>
+                    
 
                     {# Delete button #}
                     <strong class="group"><a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">x</a></strong>
