@@ -31,8 +31,12 @@
                     <div class="group-card"
                         style="background-color:{{ group.colour or '#cce5ff' }};">
                     <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
+
                     {# Edit button #}
-                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">:</button>    
+                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">:</button>
+
+                    {# Delete button #}
+                    <strong><a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">x</a></strong>
                     </div>
                     {% endif %}
 
@@ -42,8 +46,6 @@
 
                     
 
-                    {# Delete button #}
-                    <strong class="group"><a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">x</a></strong>
 
                     {# Edit modal #}
                     <dialog id="edit-group-{{ group.id }}">

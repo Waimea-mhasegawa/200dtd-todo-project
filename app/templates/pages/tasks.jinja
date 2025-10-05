@@ -24,8 +24,17 @@
     <article>
         <ul>
         {% for task in tasks %}
+
+
             <li>
-            <strong>{{ task.name }}</strong>
+
+            {% if task.colour %}
+            <div class="task-card"
+                 style="background-color: {{ task.colour or '#f0f0f0' }};">
+                <strong>{{ task.name }}</strong>
+            </div>
+
+            {% endif %}
 
             {% if task.description %}
                 - {{ task.description }}
@@ -33,13 +42,6 @@
 
             (Priority: {{ task.priority }})
 
-            {% if task.colour %}
-            <div class="task-card"
-                 style="background-color: {{ task.colour or '#f0f0f0' }};">
-                {{ task.name }}
-            </div>
-
-            {% endif %}
 
             {% if task.picture %}
                 <img src="{{ task.picture }}" alt="task picture" width="40">
@@ -52,7 +54,7 @@
             <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">Edit</button>
                         
             {# Add a link to delete & Delete button #}
-            <a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a>
+            <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
             </li>
             
 
