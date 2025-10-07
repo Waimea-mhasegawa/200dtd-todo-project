@@ -40,7 +40,7 @@ header a {
 /* GROUP PAGE ---------------------------------------------*/
 
 .group {
-    filter: invert(100%) grayscale(100%) contrast(100);
+    filter: invert(100%) grayscale(100%) contrast(100%);
     margin-right: 1rem;
 }
 

@@ -131,7 +131,7 @@ def show_tasks(group_id):
         return render_template("pages/tasks.jinja", group=group, tasks=tasks)
 
 
-@app.get("/group/<int:id>/tasks/image")
+@app.get("/groups/<int:id>/tasks/image")
 def show_task_image(id):
     with connect_db() as client:
         sql = "SELECT picture_data, picture_type FROM tasks WHERE id=? "
@@ -142,19 +142,20 @@ def show_task_image(id):
 #-----------------------------------------------------------
 # Route for adding a Task, using data posted from a form
 #-----------------------------------------------------------
-@app.get("/tasks/add/<int:group_id>")
+@app.get("/groups/<int:group_id>/tasks/add")
 def show_add_task(group_id):
     with connect_db() as client:
-        sql = "SELECT id, name FROM groups WHERE id=?"
-        group = client.execute(sql, [group_id]).rows[0]
+        group = client.execute("SELECT id, name FROM groups WHERE id=?", [group_id]).rows[0]
+
+
     return render_template("pages/add-task.jinja", group=group)
 
 
-@app.post("/tasks/add/<int:group_id>")
+@app.post("/groups/<int:group_id>/tasks/add")
 def add_task(group_id):
     name = html.escape(request.form.get("name"))
     description = request.form.get("description")
-    colour = request.form.get("colour")
+    colour = request.form.get("colour", "#2196F3")
     priority = request.form.get("priority")
     picture = request.files.get("picture")
 
@@ -225,10 +226,18 @@ def edit_task(id):
     priority = int(request.form.get("priority"))
     colour = request.form.get("colour")
     picture = request.form.get("picture")
+
+    if picture:
+        picture_data = picture.read()
+        picture_type = picture.mimetype
+    else:
+        picture_data = None
+        picture_type = None
+
     with connect_db() as client:
         client.execute(
-            "UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture=? WHERE id=?",
-            [name, description, priority, colour, picture, id]
+            "UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture_data=?, picture_type=? WHERE id=?",
+            [name, description, priority, colour, picture_data, picture_type, id]
         )
     flash(f"Task '{name}' updated", "success")
     return redirect(f"/groups/{group_id}/tasks")

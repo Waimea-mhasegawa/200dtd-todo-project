@@ -58,7 +58,7 @@
             </li>
             
 
-            <li>
+           
                 
             {# Edit modal #}
                 <dialog id="edit-task-{{ task.id }}">
@@ -113,7 +113,7 @@
                         </form>
                     </article>
                 </dialog>
-            </li>
+            
             
             {% else %}
                 <p>No tasks in this group.</p>
@@ -122,6 +122,6 @@
 
     </article>
 
-    <a href="/tasks/add" role="button" ><strong>+</strong></a>
+    <a href="/groups/{{ group.id }}/tasks/add" role="button" ><strong>+</strong></a>
 
 {% endblock %}

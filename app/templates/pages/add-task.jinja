@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-<h1>Add a New Task</h1>
+<h1>Add a New Task for "{{ group.name }}"</h1>
 
-<form action="/tasks/add" method="POST" enctype="multipart/form-data">
+<form action="/groups/{{group.id }}/tasks/add" method="POST" enctype="multipart/form-data">
         
     <input type="hidden" name="group_id" value="{{ group.id }}">
 
