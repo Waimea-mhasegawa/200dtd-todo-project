@@ -49,6 +49,43 @@ header a {
     border-radius: 8px;
     font-weight: bold;
     width: fit-content;
+    margin-bottom: 5px;
+}
+
+#info {
+    font-weight: normal;
+}
+
+/* TASK PAGE --------------------------------------------*/
+
+.task-card {
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    width: fit-content;
+}
+
+.priority {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 white,-1px 1px 0 white,1px -1px 0 white,-1px -1px 0 white;
+    margin: 10px;
+}
+
+.priority-5 {
+    color: var(--pico-color-red-500);
+}
+.priority-4 {
+    color: var(--pico-color-pumpkin-500);
+}
+.priority-3 {
+    color: var(--pico-color-lime-500);
+}
+.priority-2 {
+    color: var(--pico-color-jade-500);
+}
+.priority-1 {
+    color: var(--pico-color-azure-500);
 }
 
 /* MESSAGES -------------------------------------------- */

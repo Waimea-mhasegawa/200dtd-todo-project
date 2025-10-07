@@ -32,16 +32,27 @@
             <div class="task-card"
                  style="background-color: {{ task.colour or '#f0f0f0' }};">
                 <strong>{{ task.name }}</strong>
-            </div>
 
-            {% endif %}
+            <span class="priority priority-{{ task.priority }}">
+            {{ task.priority }}
+            </span>
+            
+            {# Edit button #}
+            <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
+                        
+            {# Add a link to delete & Delete button #}
+            <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
 
+            <article id="info">
             {% if task.description %}
                 - {{ task.description }}
-            {% endif %}    
+            {% endif %}
+            </article>
+            </li>
 
-            (Priority: {{ task.priority }})
-
+            {% endif %}
+        
+            </div>
 
             {% if task.picture %}
                 <img src="{{ task.picture }}" alt="task picture" width="40">
@@ -50,12 +61,7 @@
             {# Add a link for edit #}
             <a href="/tasks/{{ task.id }}/edit"></a>
 
-            {# Edit button #}
-            <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">Edit</button>
-                        
-            {# Add a link to delete & Delete button #}
-            <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
-            </li>
+            
             
 
            
