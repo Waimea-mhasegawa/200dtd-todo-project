@@ -35,6 +35,15 @@ init_datetime(app)  # Handle UTC dates in timestamps
 #     with connect_db() as client:
 #         groups = client.execute("SELECT id, name, colour, picture FROM groups ORDER BY name ASC").rows
 #         return render_template("pages/home.jinja")
+
+@app.get("/")
+def index():
+    with connect_db() as client:
+        # Get the details from the DB
+        sql = "SELECT id, name, colour, picture_type FROM groups ORDER BY name ASC "
+        result = client.execute(sql)
+        groups = result.rows
+        return render_template("pages/groups.jinja", groups=groups)
     
 
 #-----------------------------------------------------------
@@ -76,7 +85,8 @@ def add_group():
         picture_data = picture.read()
         picture_type = picture.mimetype
     else:
-        picture_data =  None
+        picture_data = None
+        picture_type = None
 
     with connect_db() as client:
         sql = "INSERT INTO groups (name, colour, picture_data, picture_type) VALUES (?, ?, ?, ?)"
@@ -85,8 +95,6 @@ def add_group():
 
     flash(f"group '{name}' added", "success.")
     return redirect("/groups")
-
-
 
 
 #-----------------------------------------------------------
@@ -136,22 +144,26 @@ def show_task_image(id):
 #-----------------------------------------------------------
 @app.get("/tasks/add/<int:group_id>")
 def show_add_task(group_id):
-    return render_template("pages/add-task.jinja", group_id=group_id)
+    with connect_db() as client:
+        sql = "SELECT id, name FROM groups WHERE id=?"
+        group = client.execute(sql, [group_id]).rows[0]
+    return render_template("pages/add-task.jinja", group=group)
 
-@app.post("/tasks/add")
+
+@app.post("/tasks/add/<int:group_id>")
 def add_task(group_id):
-    group_id = request.form.get("group_id")
     name = html.escape(request.form.get("name"))
     description = request.form.get("description")
     colour = request.form.get("colour")
-    picture = request.files.get("picture")
     priority = request.form.get("priority")
+    picture = request.files.get("picture")
 
-    if picture:
+    if picture and picture.filename:
         picture_data = picture.read()
         picture_type = picture.mimetype
     else:
-        picture_data =  None
+        picture_data = None
+        picture_type = None
 
     with connect_db() as client:
         sql = """
@@ -161,9 +173,9 @@ def add_task(group_id):
         values = [group_id, name, description, colour, picture_data, picture_type, priority]
         client.execute(sql, values)
 
-        flash(f"Task '{name}' added", "success")
-        return redirect(f"/groups/{group_id}/tasks")
-    
+    flash(f"Task '{name}' added", "success")
+    return redirect(f"/groups/{group_id}/tasks")
+
 
 #-----------------------------------------------------------
 # Route for editing a group
@@ -178,12 +190,20 @@ def show_edit_group(id):
 def edit_group(id):
     name = html.escape(request.form.get("name"))
     colour = request.form.get("colour")
-    picture = request.form.get("picture")
+    picture = request.files.get("picture")
+
+    if picture:
+        picture_data = picture.read()
+        picture_type = picture.mimetype
+    else:
+        picture_data = None
+        picture_type = None
+
     with connect_db() as client:
-        client.execute(
-            "UPDATE groups SET name=?, colour=?, picture=? WHERE id=?",
-            [name, colour, picture, id]
-        )
+        sql = "UPDATE groups SET name=?, colour=?, picture_data=?, picture_type=? WHERE id=?"
+        values = [name, colour, picture_data, picture_type, id]
+        client.execute(sql, values)
+        
     flash(f"Group '{name}' updated", "success")
     return redirect("/groups")
 
