@@ -43,11 +43,11 @@
             {# Add a link to delete & Delete button #}
             <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
 
-            <article id="info">
+            <div id="info">
             {% if task.description %}
-                - {{ task.description }}
+                {{ task.description }}
             {% endif %}
-            </article>
+            </div>
             </li>
 
             {% endif %}

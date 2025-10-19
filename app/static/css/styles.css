@@ -54,6 +54,8 @@ header a {
 
 #info {
     font-weight: normal;
+    background-color: white;
+    padding-inline: 15px;
 }
 
 /* TASK PAGE --------------------------------------------*/
@@ -63,13 +65,15 @@ header a {
     border-radius: 8px;
     font-weight: bold;
     width: fit-content;
+    word-break: break-word
 }
 
 .priority {
     font-size: 1.3em;
     font-weight: bold;
     text-shadow: 1px 1px 0 white,-1px 1px 0 white,1px -1px 0 white,-1px -1px 0 white;
-    margin: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
 }
 
 .priority-5 {

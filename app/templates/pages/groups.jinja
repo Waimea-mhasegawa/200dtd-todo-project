@@ -32,6 +32,10 @@
                         style="background-color:{{ group.colour or '#cce5ff' }};">
                     <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
 
+                    {% if group.picture_type %}
+                        <img src="/group/{{ group.id }}/image" alt="{{ group.name }}" width="80" height="80">
+                    {% endif %}
+
                     {# Edit button #}
                     <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">:</button>
 
@@ -40,9 +44,7 @@
                     </div>
                     {% endif %}
 
-                    {% if group.picture_type %}
-                        <img src="/group/{{ group.id }}/image" alt="{{ group.name }}" width="40">
-                    {% endif %}
+                    
 
                     
 
