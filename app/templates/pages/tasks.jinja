@@ -31,8 +31,16 @@
                     {% if task.colour %}
                     <div class="task-card"
                         style="background-color: {{ task.colour or '#f0f0f0' }};">
-                        <strong>{{ task.name }}</strong>
 
+                        <!-- complete or incomplete -->
+                    <span class="complete_and_name">  
+                    {% if task.complete %}
+                        <a href="/incomplete/{{ task.id }}">🗹</a>
+                    {% else %}
+                        <a href="/complete/{{ task.id }}">☐</a>
+                    {% endif %}
+                        <strong>{{ task.name }}</strong>
+                    </span>  
                     {% if task.picture_type %}
                         <img src="{{ url_for('show_task_image', id=task.id) }}" alt="{{ task.name }}" width="80" height="80">
                     {% endif %}
@@ -53,13 +61,7 @@
                     {% endif %}
                     </div>
 
-                    <!-- complete or incomplete -->
-                    {% if task.complete %}
-                        <a href="/incomplete/{{ task.id }}" role="button">Mark as Incomplete</a>
-                    {% else %}
-                        <a href="/complete/{{ task.id }}" role="button">Mark as Complete</a>
-                    {% endif %}
-
+                    
                 </li>
 
             {% endif %}

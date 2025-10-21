@@ -259,7 +259,7 @@ def task_complete(id):
         values = [id]
 
         client.execute(sql, values)
-        group_id = client.execute("SELECT group_id FROM tasks WHERE id-?", [id]).rows[0]["group_id"]
+        group_id = client.execute("SELECT group_id FROM tasks WHERE id=?", [id]).rows[0]["group_id"]
     flash("Task marked as complete", "success")
     return redirect(f"/groups/{ group_id }/tasks")
 
@@ -270,7 +270,7 @@ def task_complete(id):
 @app.get("/incomplete/<int:id>")
 def task_incomplete(id):
     with connect_db() as client:
-        sql = "UPDATE tasks SET complete=1 WHERE id=?"
+        sql = "UPDATE tasks SET complete=0 WHERE id=?"
         values = [id]
 
         client.execute(sql, values)
