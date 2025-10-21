@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Edit Group "{{ group.name }}"</h1>
 
-<form action="/groups/{{ group_id }}/edit" method="POST" enctype="multipart/form-data">
+<form action="/groups/{{ group.id }}/edit" method="POST" enctype="multipart/form-data">
     <label>
         Group Name:
         <input type="text" name="name" value="{{ group.name }}" required>
@@ -19,7 +19,7 @@
     <label>
         Group Picture:
         <input type="file" name="picture" accept="image/*">
-        {% if group.picture_data %}
+        {% if group.picture_type %}
             <img src="{{ url_for('show_group_image', id=group.id) }}" alt="{{ group.name }}" width="50">
         {% endif %}
     </label>

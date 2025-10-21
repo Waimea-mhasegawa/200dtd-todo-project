@@ -23,40 +23,49 @@
 
     <article>
         <ul>
-        {% for task in tasks %}
+            {% for task in tasks %}
 
 
-            <li>
+                <li>
 
-            {% if task.colour %}
-            <div class="task-card"
-                 style="background-color: {{ task.colour or '#f0f0f0' }};">
-                <strong>{{ task.name }}</strong>
+                    {% if task.colour %}
+                    <div class="task-card"
+                        style="background-color: {{ task.colour or '#f0f0f0' }};">
+                        <strong>{{ task.name }}</strong>
 
-            <span class="priority priority-{{ task.priority }}">
-            {{ task.priority }}
-            </span>
+                    {% if task.picture_type %}
+                        <img src="{{ url_for('show_task_image', id=task.id) }}" alt="{{ task.name }}" width="80" height="80">
+                    {% endif %}
+
+                    <span class="priority priority-{{ task.priority }}">
+                    {{ task.priority }}
+                    </span>
             
-            {# Edit button #}
-            <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
+                    {# Edit button #}
+                    <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
                         
-            {# Add a link to delete & Delete button #}
-            <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
+                    {# Add a link to delete & Delete button #}
+                    <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
 
-            <div id="info">
-            {% if task.description %}
-                {{ task.description }}
-            {% endif %}
-            </div>
-            </li>
+                    <div id="info">
+                    {% if task.description %}
+                        {{ task.description }}
+                    {% endif %}
+                    </div>
+
+                    <!-- complete or incomplete -->
+                    {% if task.complete %}
+                        <a href="/incomplete/{{ task.id }}" role="button">Mark as Incomplete</a>
+                    {% else %}
+                        <a href="/complete/{{ task.id }}" role="button">Mark as Complete</a>
+                    {% endif %}
+
+                </li>
 
             {% endif %}
         
             </div>
 
-            {% if task.picture %}
-                <img src="{{ task.picture }}" alt="task picture" width="40">
-            {% endif %}
 
             {# Add a link for edit #}
             <a href="/tasks/{{ task.id }}/edit"></a>

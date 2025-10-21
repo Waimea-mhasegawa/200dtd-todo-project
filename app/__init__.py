@@ -16,6 +16,7 @@ from app.helpers.time    import init_datetime, utc_timestamp, utc_timestamp_now
 from app.helpers.images  import image_file
 
 
+
 # Create the app
 app = Flask(__name__)
 
@@ -118,7 +119,7 @@ def delete_group(id):
 def show_tasks(group_id):
     with connect_db() as client:
         sql = """
-            SELECT id, name, description, colour, picture_type, priority FROM tasks WHERE group_id=?
+            SELECT id, name, description, colour, picture_type, priority, group_id, complete FROM tasks WHERE group_id=?
             ORDER BY priority DESC
             """
         result = client.execute(sql, [group_id])
@@ -193,17 +194,18 @@ def edit_group(id):
     colour = request.form.get("colour")
     picture = request.files.get("picture")
 
-    if picture:
-        picture_data = picture.read()
-        picture_type = picture.mimetype
-    else:
-        picture_data = None
-        picture_type = None
-
     with connect_db() as client:
-        sql = "UPDATE groups SET name=?, colour=?, picture_data=?, picture_type=? WHERE id=?"
-        values = [name, colour, picture_data, picture_type, id]
+        if picture and picture.filename:
+            picture_data = picture.read()
+            picture_type = picture.mimetype
+            sql = "UPDATE groups SET name=?, colour=?, picture_data=?, picture_type=? WHERE id=?"
+            values = [name, colour, picture_data, picture_type, id]
+        else:
+            sql = "UPDATE groups SET name=?, colour=? WHERE id=?"
+            values = [name, colour, id]
+
         client.execute(sql, values)
+
         
     flash(f"Group '{name}' updated", "success")
     return redirect("/groups")
@@ -212,33 +214,37 @@ def edit_group(id):
 #-----------------------------------------------------------
 # Route for editing a task
 #-----------------------------------------------------------
-@app.get("/tasks/<int:id>/edit")
-def show_edit_task(id):
+@app.get("/tasks/<int:group_id>/edit")
+def show_edit_task(group_id):
     with connect_db() as client:
-        task = client.execute("SELECT * FROM tasks WHERE id=?", [id]).rows[0]
+        task = client.execute("SELECT * FROM tasks WHERE id=?", [group_id]).rows[0]
     return render_template("pages/edit-task.jinja", task=task)
 
-@app.post("/tasks/<int:id>/edit")
-def edit_task(id):
+@app.post("/tasks/<int:task_id>/edit")
+def edit_task(task_id):
     group_id = request.form.get("group_id")
     name = html.escape(request.form.get("name"))
     description = request.form.get("description")
     priority = int(request.form.get("priority"))
     colour = request.form.get("colour")
-    picture = request.form.get("picture")
-
-    if picture:
-        picture_data = picture.read()
-        picture_type = picture.mimetype
-    else:
-        picture_data = None
-        picture_type = None
+    picture = request.files.get("picture")
 
     with connect_db() as client:
-        client.execute(
-            "UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture_data=?, picture_type=? WHERE id=?",
-            [name, description, priority, colour, picture_data, picture_type, id]
-        )
+        if picture and picture.filename:
+            picture_data = picture.read()
+            picture_type = picture.mimetype
+            sql = """
+                UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture_data=?, picture_type=? WHERE id=?
+            """
+            values = [name, description, priority, colour, picture_data, picture_type, task_id]
+        else:
+            # not be updated without picture
+            sql = """
+                UPDATE tasks SET name=?, description=?, priority=?, colour=? WHERE id=?
+            """
+            values = [name, description, priority, colour, task_id]
+
+        client.execute(sql, values)
     flash(f"Task '{name}' updated", "success")
     return redirect(f"/groups/{group_id}/tasks")
 
@@ -249,7 +255,10 @@ def edit_task(id):
 @app.get("/complete/<int:id>")
 def task_complete(id):
     with connect_db() as client:
-        client.execute("UPDATE tasks SET complete=1 WHERE id=?",[id])
+        sql = "UPDATE tasks SET complete=1 WHERE id=?"
+        values = [id]
+
+        client.execute(sql, values)
         group_id = client.execute("SELECT group_id FROM tasks WHERE id-?", [id]).rows[0]["group_id"]
     flash("Task marked as complete", "success")
     return redirect(f"/groups/{ group_id }/tasks")
@@ -261,10 +270,14 @@ def task_complete(id):
 @app.get("/incomplete/<int:id>")
 def task_incomplete(id):
     with connect_db() as client:
-        client.execute("UPDATE tasks SET complete=0 WHERE id-?",[id])
+        sql = "UPDATE tasks SET complete=1 WHERE id=?"
+        values = [id]
+
+        client.execute(sql, values)
         group_id = client.execute("SELECT group_id FROM tasks WHERE id-?", [id]).rows[0]["group_id"]
     flash("Task marked as incomplete")
     return redirect(f"/groups/{ group_id }/tasks")
+
 
 #-----------------------------------------------------------
 # Route for deleting a task, Id given in the route
