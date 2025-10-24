@@ -32,7 +32,7 @@
                     <div class="task-card"
                         style="background-color: {{ task.colour or '#f0f0f0' }};">
 
-                        <!-- complete or incomplete -->
+                    <!-- complete or incomplete -->
                     <span class="complete_and_name">  
                     {% if task.complete %}
                         <a href="/incomplete/{{ task.id }}">🗹</a>
@@ -48,6 +48,19 @@
                     <span class="priority priority-{{ task.priority }}">
                     {{ task.priority }}
                     </span>
+
+                    {% if task.due_date %}
+                      {% set due_date_str = task.due_date | replace('-', '/') %}
+                      {% set today = utcnow().strftime('%Y/%m/%d') %}
+                      {% if task.due_date < utcnow().strftime('%Y-%m-%d') %}
+                        <p><strong style="color: red;">Due: {{ due_date_str }}</strong></p>
+                      {% else %}
+                        <p><strong>Due: {{ due_date_str }}</strong></p>
+                      {% endif %}
+                    {% else %}
+                      <p><em>No due date</em></p>
+                    {% endif %}
+
             
                     {# Edit button #}
                     <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
@@ -115,6 +128,11 @@
                                 Task Colour:
 
                                 <input type="color" name="colour" value="{{ task.colour }}">
+                            </label>
+
+                            <label>
+                                Due Date:
+                                <input type="date" name="due_date" value="{{ task.due_date }}">
                             </label>
 
                             <label>
