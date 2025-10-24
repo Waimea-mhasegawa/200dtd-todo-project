@@ -158,6 +158,7 @@ def add_task(group_id):
     description = request.form.get("description")
     colour = request.form.get("colour", "#2196F3")
     priority = request.form.get("priority")
+    due_date = request.form.get("due_date")
     picture = request.files.get("picture")
 
     if picture and picture.filename:
@@ -169,8 +170,8 @@ def add_task(group_id):
 
     with connect_db() as client:
         sql = """
-            INSERT INTO tasks (group_id, name, description, colour, picture_data, picture_type, priority)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO tasks (group_id, name, description, colour, picture_data, picture_type, priority, due_date)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
         values = [group_id, name, description, colour, picture_data, picture_type, priority]
         client.execute(sql, values)
@@ -227,6 +228,7 @@ def edit_task(task_id):
     description = request.form.get("description")
     priority = int(request.form.get("priority"))
     colour = request.form.get("colour")
+    due_date = request.form.get("due_date")
     picture = request.files.get("picture")
 
     with connect_db() as client:
@@ -234,13 +236,13 @@ def edit_task(task_id):
             picture_data = picture.read()
             picture_type = picture.mimetype
             sql = """
-                UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture_data=?, picture_type=? WHERE id=?
+                UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture_data=?, picture_type=?, due_date=? WHERE id=?
             """
             values = [name, description, priority, colour, picture_data, picture_type, task_id]
         else:
             # not be updated without picture
             sql = """
-                UPDATE tasks SET name=?, description=?, priority=?, colour=? WHERE id=?
+                UPDATE tasks SET name=?, description=?, priority=?, colour=?, due_date=? WHERE id=?
             """
             values = [name, description, priority, colour, task_id]
 
