@@ -37,6 +37,16 @@
     </label>
 
     <label>
+    Due Date:
+    <input
+        type="date"
+        name="due_date"
+        value="{{ task.due_date }}"
+    >
+    </label>
+
+
+    <label>
         Picture:
         <input type="file" name="picture" accept="image/*">
         {% if task.picture_data %}
