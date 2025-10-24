@@ -14,7 +14,7 @@ from app.helpers.errors  import init_error, not_found_error
 from app.helpers.logging import init_logging
 from app.helpers.time    import init_datetime, utc_timestamp, utc_timestamp_now
 from app.helpers.images  import image_file
-
+from datetime import datetime
 
 
 # Create the app
@@ -119,7 +119,7 @@ def delete_group(id):
 def show_tasks(group_id):
     with connect_db() as client:
         sql = """
-            SELECT id, name, description, colour, picture_type, priority, group_id, complete FROM tasks WHERE group_id=?
+            SELECT id, name, description, colour, picture_type, priority, group_id, complete, due_date FROM tasks WHERE group_id=?
             ORDER BY priority DESC
             """
         result = client.execute(sql, [group_id])
@@ -290,6 +290,13 @@ def delete_task(id):
 
     flash(f"Task deleted", "success.")
     return redirect(f"/groups/{group_id}/tasks")
+
+#-----------------------------------------------------------
+# Route for due date
+#-----------------------------------------------------------
+@app.context_processor
+def inject_now():
+    return  {'utcnow': datetime.utcnow}
 
 #-----------------------------------------------------------
 # About page route
