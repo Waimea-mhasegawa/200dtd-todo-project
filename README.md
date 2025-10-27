@@ -13,7 +13,7 @@ This app will allow a parent to organise everyday jobs for a family
 - Allow new groups/tasks to be added
 - Know the due of the task
 - Tasks can be marked as complated 
-- Tasks can delate
+- Tasks can edit
 
 
 ---
