@@ -2,36 +2,39 @@
 
 ## Identified Problem or Need
 
-If you have any plans in daily, it need to be organised and scheduled to prevent missing the plans. Remembering what task/plans you have.
+If you have any tasks in daily, it need to be organised and scheduled to prevent missing the tasks. Remembering what tasks/plans you have.
 
 It is a kind of To-Do list.
 
 ## End-User Requirements
 
-Replace this text with a description of your typical end-users and their specific needs / expectations / requirements.
+The typical end-user would be someone who wants to manage all their tasks/plans. They may have just one task, or they may have several. In other words, this system must cater to people with various types of tasks—it must be able to categorise tasks and be concise and visually clear.
 
 
 ## Proposed Solution
+A system that allows someone to see manageable tasks for users.
 
-Replace this text with a brief statement about the system that you intend to create, including the key functionality it should have.
-
+- Show a list of tasks that need to be done
+- Allow new groups/tasks to be added
+- Know the due of the task
+- Tasks can be marked as complated
+- Tasks can edit
 
 ---
 
 # Relevant Implications
 
-## NAME OF IMPLICATION 1
+## Functionality
 
-Replace this text with a clear explanation of what the implication means.
+A functional system means everything works the way it should. All features must run properly, the information shown to users needs to be correct, and the system shouldn’t crash or behave in unexpected ways. The system should do what it was designed to do without errors.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+Functionality is very important for a task management app because users rely on it to stay organized and keep track of their work. If the system doesn’t function correctly, tasks might not save or reminders could be missed, which would make the app unreliable. When this happens, users may lose trust and stop using it. Making sure the app is fully functional ensures that users can depend on it to manage their daily tasks effectively.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
-
+I need to make sure that every part of the system works properly and does what it’s supposed to do. To achieve this, I will thoroughly test the app using different types of input and scenarios.  This testing will help identify any errors or issues so they can be fixed before the app is used by others.
 
 
 ## NAME OF IMPLICATION 2
