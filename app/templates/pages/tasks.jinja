@@ -41,14 +41,24 @@
                     {% endif %}
                         <strong>{{ task.name }}</strong>
                     </span>  
+                    <span class="pics">
                     {% if task.picture_type %}
                         <img src="{{ url_for('show_task_image', id=task.id) }}" alt="{{ task.name }}" width="80" height="80">
                     {% endif %}
-
+                    </span>
                     <span class="priority priority-{{ task.priority }}">
                     {{ task.priority }}
                     </span>
 
+
+                    {# Edit button #}
+                    <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
+                        
+                    {# Add a link to delete & Delete button #}
+                    <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
+
+
+                    <span class="due_date">
                     {% if task.due_date %}
                       {% set due_date_str = task.due_date | replace('-', '/') %}
                       {% set today = utcnow().strftime('%Y/%m/%d') %}
@@ -58,15 +68,11 @@
                         <p><strong>Due: {{ due_date_str }}</strong></p>
                       {% endif %}
                     {% else %}
-                      <p><em>No due date</em></p>
+                      <p><em><strong>No due date</strong></em></p>
                     {% endif %}
-
+                    </span>
             
-                    {# Edit button #}
-                    <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
-                        
-                    {# Add a link to delete & Delete button #}
-                    <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
+                    
 
                     <div id="info">
                     {% if task.description %}

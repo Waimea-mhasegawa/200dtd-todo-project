@@ -12,7 +12,7 @@ header {
     color: #050704;
     width: 100%; 
     margin: 0;
-    padding: 0;
+    padding-left: 0;
 }
 
 .head {
@@ -70,7 +70,15 @@ header a {
     word-break: break-word
 }
 
+.pics {
+    margin-left: 8px;
+}
+
 .complete_and_name {
+    text-shadow: 1px 1px 0 white,-1px 1px 0 white,1px -1px 0 white,-1px -1px 0 white;
+}
+
+.due_date {
     text-shadow: 1px 1px 0 white,-1px 1px 0 white,1px -1px 0 white,-1px -1px 0 white;
 }
 
@@ -78,7 +86,7 @@ header a {
     font-size: 1.3em;
     font-weight: bold;
     text-shadow: 1px 1px 0 white,-1px 1px 0 white,1px -1px 0 white,-1px -1px 0 white;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-right: 10px;
 }
 

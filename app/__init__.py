@@ -238,13 +238,13 @@ def edit_task(task_id):
             sql = """
                 UPDATE tasks SET name=?, description=?, priority=?, colour=?, picture_data=?, picture_type=?, due_date=? WHERE id=?
             """
-            values = [name, description, priority, colour, picture_data, picture_type, task_id]
+            values = [name, description, priority, colour, picture_data, picture_type, due_date, task_id]
         else:
             # not be updated without picture
             sql = """
                 UPDATE tasks SET name=?, description=?, priority=?, colour=?, due_date=? WHERE id=?
             """
-            values = [name, description, priority, colour, task_id]
+            values = [name, description, priority, colour, due_date, task_id]
 
         client.execute(sql, values)
     flash(f"Task '{name}' updated", "success")
