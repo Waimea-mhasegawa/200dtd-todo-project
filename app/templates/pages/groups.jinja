@@ -29,7 +29,7 @@
 
                     {% if group.colour %}
                     <div class="group-card"
-                        style="background-color:{{ group.colour or '#cce5ff' }};">
+                        style="background-color:{{ group.colour or '#afcfc0' }};">
                     <strong class="group"><a href="/groups/{{ group.id }}/tasks">{{ group.name }}</a></strong>
 
                     {% if group.picture_type %}
@@ -37,7 +37,8 @@
                     {% endif %}
 
                     {# Edit button #}
-                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()">:</button>
+                    <button onclick="document.getElementById('edit-group-{{ group.id }}').showModal()"
+                        style="padding: 10px;">:</button>
 
                     {# Delete button #}
                     <strong><a href="/groups/{{ group.id }}/delete" onclick="return confirm('Delete this group?');">x</a></strong>

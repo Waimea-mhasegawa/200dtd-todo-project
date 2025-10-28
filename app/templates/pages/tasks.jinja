@@ -30,7 +30,7 @@
 
                     {% if task.colour %}
                     <div class="task-card"
-                        style="background-color: {{ task.colour or '#f0f0f0' }};">
+                        style="background-color: {{ task.colour or '#afcfc0' }};">
 
                     <!-- complete or incomplete -->
                     <span class="complete_and_name">  
@@ -52,7 +52,8 @@
 
 
                     {# Edit button #}
-                    <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()">:</button>
+                    <button onclick="document.getElementById('edit-task-{{ task.id }}').showModal()"
+                        style="padding: 10px;">:</button>
                         
                     {# Add a link to delete & Delete button #}
                     <strong><a href="/tasks/{{ task.id }}/delete" onclick="return confirm('Delete the task?');">x</a></strong>
@@ -65,10 +66,10 @@
                       {% if task.due_date < utcnow().strftime('%Y-%m-%d') %}
                         <p><strong style="color: red;">Due: {{ due_date_str }}</strong></p>
                       {% else %}
-                        <p><strong>Due: {{ due_date_str }}</strong></p>
+                        <p><strong style="color: #404040;">Due: {{ due_date_str }}</strong></p>
                       {% endif %}
                     {% else %}
-                      <p><em><strong>No due date</strong></em></p>
+                      <p>No due date</p>
                     {% endif %}
                     </span>
             
