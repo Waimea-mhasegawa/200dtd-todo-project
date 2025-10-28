@@ -1,19 +1,19 @@
-# PROJECT NAME HERE
+# FAMILY TO-DO APP
 
-by YOUR NAME HERE
+by Mirai Hasegawa
 
 
 ---
 
 ## Project Description
 
-Replace this text with your project description and list the key features below
+This app will allow a parent to organise everyday jobs for a family
 
-- Feature 1 here
-- Feature 2 here
-- Feature 3 here
-- Feature 4 here
-- Feature 5 here
+- Show a list of tasks that need to be done
+- Allow new groups/tasks to be added
+- Know the due of the task
+- Tasks can be marked as completed 
+- Tasks can edit
 
 
 ---

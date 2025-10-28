@@ -12,12 +12,12 @@ The typical end-user would be someone who wants to manage all their tasks/plans.
 
 
 ## Proposed Solution
-A system that allows someone to see manageable tasks for users.
+A system that allows someone to see manageable tasks for users as family.
 
 - Show a list of tasks that need to be done
 - Allow new groups/tasks to be added
 - Know the due of the task
-- Tasks can be marked as complated
+- Tasks can be marked as completed
 - Tasks can edit
 
 ---

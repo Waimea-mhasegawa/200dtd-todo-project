@@ -12,7 +12,7 @@ This app will allow a parent to organise everyday jobs for a family
 - Show a list of tasks that need to be done
 - Allow new groups/tasks to be added
 - Know the due of the task
-- Tasks can be marked as complated 
+- Tasks can be marked as completed 
 - Tasks can edit
 
 
