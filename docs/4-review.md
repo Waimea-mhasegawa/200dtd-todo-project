@@ -2,9 +2,9 @@
 
 ## Addressing Relevant Implications
 
-### NAME OF IMPLICATION 1
+### Social IMPLICATION
 
-Replace this text with notes about what you did during the project to address the implication - design features, etc.
+I designed the To-Do List app to help users manage their tasks. The interface was made simple and visible.
 
 
 ### NAME OF IMPLICATION 2
