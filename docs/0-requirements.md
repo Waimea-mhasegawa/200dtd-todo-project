@@ -61,21 +61,21 @@ It is important for user visually because they directly influence user perceptio
 
 ### Impact / Considerations
 
-I need to 
+I need to choose colors, fonts, and layouts that are visually appealing and consistent across all pages. The design should be simple and clear, helping users focus on their tasks without distraction. A balanced and clean aesthetic will improve both usability and user experience.
 
 
 
 ## Accessibility
 
-Replace this text with a clear explanation of what the implication means.
+Accessibility means that everyone can use a system effectively. Text should be readable, buttons and links should be easy to identify and use, and color choices should not prevent anyone from understanding the content.
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+Accessibility is important for a management system because users with different needs must all be able to manage their tasks efficiently. If the system is not accessible, making the application difficult. By ensuring accessibility, the system becomes inclusive, allowing everyone to stay organized.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+I will check the system meets accessibility standards and is easy to use for everyone. I will follow accessibility guidelines and test the system with thinking ease of use for all users. 
 
 
 
