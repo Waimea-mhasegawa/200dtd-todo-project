@@ -173,7 +173,7 @@ def add_task(group_id):
             INSERT INTO tasks (group_id, name, description, colour, picture_data, picture_type, priority, due_date)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
-        values = [group_id, name, description, colour, picture_data, picture_type, priority]
+        values = [group_id, name, description, colour, picture_data, picture_type, priority, due_date]
         client.execute(sql, values)
 
     flash(f"Task '{name}' added", "success")
