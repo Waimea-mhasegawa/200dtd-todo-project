@@ -43,11 +43,11 @@ A system refers how easy and effective it is for a user to achieve their goals w
 
 ### Relevance to the System
 
-it is important for a task management because it directly impacts a product's success by making it easy for users to complete tasks, leading to increased satisfaction, efficiency, and loyalty. 
+It is important for a task management because it directly impacts a product's success by making it easy for users to complete tasks, leading to increased satisfaction, efficiency, and loyalty. 
 
 ### Impact / Considerations
 
-To make the app more usable, I need to design a clear and simple interface with easily recognizable buttons for navigation. I will test the app with different users to identify any parts that are confusing or hard to use. This testing will help 
+To make the app more usable, I need to design a clear and simple interface with easily recognizable buttons for navigation. It will be used to guide users toward actions. I will test to identify any elements that are confusing of difficult to use. This testing will help ensuring that the final app is simple, efficient, and enjoyable for everyone.
 
 
 
@@ -57,12 +57,11 @@ A aesthetics mean a strategic approach to designing the app's visual appearance 
 
 ### Relevance to the System
 
-It is important for user visually because they directly influence user perception, trust, and behavior. If the system doesn't work, the webpage might br poor visibility, which could make users frustrated. When this happens, users may stop using it.
+It is important for a task management system because users interact with the system. a clean and visually design helps users concentrate on their tasks and encourages daily use. If the interface looks confusing, users might feel frustrated or difficulty and then may stop using the system. Onthe other hand, an aesthetically design helps creating positive emotional to users.
 
 ### Impact / Considerations
 
-I need to choose colors, fonts, and layouts that are visually appealing and consistent across all pages. The design should be simple and clear, helping users focus on their tasks without distraction. A balanced and clean aesthetic will improve both usability and user experience.
-
+I wiil focus on maintaining a consistent visual style across all pages. This includes using a harmonious colour palette and readable fonts. I will also make it simple and balance and avoid visual confusing. Through testing, I will identify design elements that possible to confuse and edit it to improve visibility. A visually organised interface makes system more enjoyable.
 
 
 ## Accessibility
@@ -81,14 +80,14 @@ I will check the system meets accessibility standards and is easy to use for eve
 
 ## Health and Safety
 
-Replace this text with a clear explanation of what the implication means.
+Health and safety means that protecting users from any risks while using the system. It doesn't just mean phycial safety, but also degital in digital system. A safe system should protect user data, prevent stress or eye strain from from poor design and ensure users can use the app any negative effects on their health. 
 
 ### Relevance to the System
 
-Replace this text with an explanation of why the implication is relevant to this particular project.
+It is important for a system because some users spend long times with it to plan and organise their tasks. If the interface is complex, uses too vivd colours or it is difficult to read, it could cause eye strain or frustration. The app must protect user information to prevent privacy risk. A system that considers health and safety helps users feel comfortable, secure, and confident while using it.
 
 ### Impact / Considerations
 
-Replace this text with an explanation of what you will need to consider moving forward and how the project will be impacted by this implication.
+I will design the interface with appropriate colours, readable fonts, and a layout that reduces eye strain to support health and safety. I will also ensure the app includes system that encourage healthy use, such as editable group/task colours. I store data in trustable database to protect user information. By considering both physical comfort and digital safety, the app will provide a secure and user-friendly experience for all users.
 
 
