@@ -24,12 +24,14 @@ I included features that make the app usable for everyone, including people with
 
 ### Health & Safety IMPLICATION
 
-I considered user wellbeing when designing the app. The interface uses calming colours and a clean layout to reduce visual strain and stress. By helping users organize tasks effectively, the app supports positive mental health and reduces anxiety related to time management. It also encourages healthy work–life balance by allowing users to set reminders and manage their workload safely and efficiently.
+I considered user wellbeing when designing the app. The interface uses calming green and a clean layout to reduce visual strain and stress. By helping users organise tasks effectively, the app supports positive mental health and reduces anxiety related to task management. It also encourages healthy work–life balance by allowing users to set reminders and manage their safely and efficiently.
 
 
 ---
 
 ## Overall Review
+
+I created a great To-Do app. It helps to manage tasks. 
 
 Replace these words with a brief review of how the project went in terms of:
 - What went well?
