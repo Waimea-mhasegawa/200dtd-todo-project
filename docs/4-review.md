@@ -31,7 +31,7 @@ I considered user wellbeing when designing the app. The interface uses calming g
 
 ## Overall Review
 
-I created a great To-Do app. It helps to manage tasks. 
+I created a great To-Do app. It helps to manage tasks. Users can categorise tasks into groups by type, and each task can be assigned a priority, picture, colour, and due date. Furthermore, a checkmark can be added to indicate whether a task is completed. This makes it easy to see which tasks are finished and which are still pending. This system doesn't have notifications such as reminders, so user must open the app and see their tasks. This To-Do app exists to support users. Various patterns were used to add groups/tasks, ensuring no errors occurred throughout the entire process. Various patterns were also used during editing, ensuring no errors occurred during the process of approving changes. This ensures a comfortable experience for users when using this application and prevents situations where the application becomes unusable due to errors. I will be able to make the application better to add a notification to remind users of tasks. If the application has a notification, it could prevent fail to finish tasks, even the users do not open the application.
 
 Replace these words with a brief review of how the project went in terms of:
 - What went well?
